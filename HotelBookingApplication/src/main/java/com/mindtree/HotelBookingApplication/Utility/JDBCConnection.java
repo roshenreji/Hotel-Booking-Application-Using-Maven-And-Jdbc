@@ -11,8 +11,8 @@ import com.mindtree.HotelBookingApplication.Exceptions.DaoException.DatabaseConn
 
 public class JDBCConnection {
 
-	private static final String URL = "jdbc:mysql://localhost:3306/newdatabase";
-	private static final String USER_NAME = "root";
+	private static final String URL = "jdbc:mysql://localhost:3306/sample";
+	private static final String USER_NAME = "root54";
 	private static final String PASSWORD = "Helloworld1234";
 
 	
