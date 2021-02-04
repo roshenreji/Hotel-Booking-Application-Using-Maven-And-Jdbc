@@ -19,6 +19,7 @@ public class HotelBookingApplication {
 		boolean isValid = true;
 		Hotel hotel = null;
 		Room rooms;
+		System.out.println("pull test");
 		do {
 			displayMessages();
 			int choice = sc.nextInt();
