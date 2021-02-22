@@ -1,0 +1,118 @@
+pipeline {
+     agent {
+        docker {
+      image 'maven:3.6.3-jdk-11'
+      args '-v /root/.m2:/root/.m2'
+    }
+    tools{
+        maven 'maven'
+        jdk 'Jdk'
+    }
+    stages{
+          stage('Fetch') {
+            steps {
+               sh 'echo $JOB_NAME'
+                sh 'echo $BUILD_NUMBER'
+                sh 'echo Fetch'
+               git branch: 'master', url: 'https://github.com/roshenreji/Hotel-Booking-Application-Using-Maven-And-Jdbc.git'
+            }
+        }
+        
+        stage('Path'){
+            steps{
+                sh 'echo Path'
+                sh 'pwd && ls'
+            }
+        }
+        stage('Clean'){
+            steps{
+                dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                    sh 'echo Clean'
+                    sh 'mvn  clean'
+                }
+            }
+        }
+        stage('Validate'){
+                steps{
+                     dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                
+                        sh 'mvn  validate'
+                     }
+                }
+            
+         }
+        stage('Compile'){
+                steps{
+                     dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                 
+                        sh 'echo Compile'
+                         sh 'mvn  compile'
+                     }
+                }
+            
+        }
+        stage('Sonar Analysis'){
+            steps{
+                 dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                    withSonarQubeEnv('SonarCloud'){
+                        withMaven(maven:'maven'){
+                            sh 'mvn sonar:sonar'
+                        }
+                        
+                  }
+                }
+            }
+            
+        }
+        stage('Build'){
+            steps {
+                 dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                
+                        sh 'echo Build'
+                        sh 'mvn  package'
+                 }
+            }
+            
+            post {
+                always {
+                    //junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'PassportApplication/target/*.jar'
+                     }
+                }
+             }
+             stage('Test'){
+                 steps {
+                      dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/Hotel-Booking-Application-Using-Maven-And-Jdbc"){
+                         sh 'echo Test'
+                         sh 'mvn test'
+                      }
+                 }
+            }
+            stage('collect artifact'){
+                steps{
+                    archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+                 }
+            }      
+         stage('deploy to artifactory')
+         {
+            steps{
+     
+                rtUpload (
+                    serverId: 'JfrogId',
+                    spec: '''{
+                    "files": [
+                         {
+                             "pattern": "target/*.jar",
+                             "target": "art-doc-dev-loc"
+                        }
+                     ]
+                }''',
+ 
+  
+    buildName: 'Build1',
+    buildNumber: '1'
+)
+     }}
+        
+    }
+}
