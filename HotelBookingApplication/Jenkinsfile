@@ -55,7 +55,7 @@ pipeline {
         stage('Sonar Analysis'){
             steps{
                  dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
-                    withSonarQubeEnv('SonarCloud'){
+                    withSonarQubeEnv('Sonar'){
                         withMaven(maven:'maven'){
                             sh 'mvn sonar:sonar'
                         }
