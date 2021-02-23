@@ -119,7 +119,7 @@ pipeline {
                     "files": [
                          {
                              "pattern": "art-doc-dev-loc-new/sample/*.jar",
-                             "target": "HotelBookingApplication"
+                             "target": "HotelBookingApplication/sample"
                         }
                      ]
                 }''',
