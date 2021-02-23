@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Clean'){
             steps{
-                dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                     sh 'echo Clean'
                     sh 'mvn  clean'
                 }
@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Validate'){
                 steps{
-                     dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                     dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                 
                         sh 'mvn  validate'
                      }
@@ -39,7 +39,7 @@ pipeline {
          }
         stage('Compile'){
                 steps{
-                     dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                     dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                  
                         sh 'echo Compile'
                          sh 'mvn  compile'
@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Sonar Analysis'){
             steps{
-                 dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                 dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                     withSonarQubeEnv('Sonar'){
                         withMaven(maven:'maven'){
                             sh 'mvn sonar:sonar'
@@ -62,7 +62,7 @@ pipeline {
         }
         stage('Build'){
             steps {
-                 dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                 dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                 
                         sh 'echo Build'
                         sh 'mvn  package'
@@ -78,7 +78,7 @@ pipeline {
              }
              stage('Test'){
                  steps {
-                      dir("C:/Users/roshe/.jenkins/workspace/Hotel-Booking-Application-Using-Maven-And-Jdbc/HotelBookingApplication"){
+                      dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                          sh 'echo Test'
                          sh 'mvn test'
                       }
