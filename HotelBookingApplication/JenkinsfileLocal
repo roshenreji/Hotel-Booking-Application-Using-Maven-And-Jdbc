@@ -109,7 +109,7 @@ pipeline {
     buildNumber: '1'
 )
      }}
-     tage('download from artifactory')
+     stage('download from artifactory')
          {
             steps{
      
