@@ -118,8 +118,8 @@ pipeline {
                     spec: '''{
                     "files": [
                          {
-                             "pattern": "art-doc-dev-loc-new/sample/*.jar",
-                             "target": "HotelBookingApplication/sample"
+                             "pattern": "art-doc-dev-loc-new/sample/",
+                             "target": "HotelBookingApplication/"
                         }
                      ]
                 }''',
