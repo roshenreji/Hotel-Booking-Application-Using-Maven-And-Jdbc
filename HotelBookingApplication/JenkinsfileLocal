@@ -109,6 +109,26 @@ pipeline {
     buildNumber: '1'
 )
      }}
+     tage('download from artifactory')
+         {
+            steps{
+     
+                rtDownload (
+                    serverId: 'JfrogId',
+                    spec: '''{
+                    "files": [
+                         {
+                             "pattern": "art-doc-dev-loc-new/sample/*.jar",
+                             "target": "HotelBookingApplication/target/newSample"
+                        }
+                     ]
+                }''',
+ 
+  
+    buildName: 'Build2',
+    buildNumber: '1'
+)
+     }}
         
     }
 }
