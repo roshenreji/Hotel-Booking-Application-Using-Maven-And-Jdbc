@@ -52,19 +52,15 @@ pipeline {
                 }
             
         }
-        stage('Sonar Analysis'){
-            steps{
-                 dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
-                    withSonarQubeEnv('Sonar'){
-                        withMaven(maven:'maven'){
-                            sh 'mvn sonar:sonar'
-                        }
-                        
-                  }
-                }
+        stage('Test'){
+                 steps {
+                      dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
+                         sh 'echo Test'
+                         sh 'mvn test'
+                      }
+                 }
             }
-            
-        }
+        
         stage('Build'){
             steps {
                  dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
@@ -81,14 +77,25 @@ pipeline {
                      }
                 }
              }
-             stage('Test'){
-                 steps {
-                      dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
-                         sh 'echo Test'
-                         sh 'mvn test'
-                      }
-                 }
+             
+            stage('Sonar Analysis'){
+            steps{
+                 dir("/var/jenkins_home/workspace/ArtifactorySample/HotelBookingApplication"){
+                    withSonarQubeEnv('Sonar'){
+                        withMaven(maven:'maven'){
+                            sh 'mvn sonar:sonar'
+                        }
+                        
+                  }
+                }
             }
+            
+        }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
             stage('collect artifact'){
                 steps{
                     archiveArtifacts artifacts: 'HotelBookingApplication/target/*.jar', followSymlinks: false
