@@ -47,20 +47,15 @@ pipeline {
                 }
             
         }
-        stage('Sonar Analysis'){
-            steps{
-                 dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
-                    withSonarQubeEnv('Sonar'){
-                        withMaven(maven:'maven'){
-                            sh 'mvn sonar:sonar'
-                        }
-                        
-                  }
-                }
+        stage('Test'){
+                 steps {
+                      dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
+                         sh 'echo Test'
+                         sh 'mvn test'
+                      }
+                 }
             }
-            
-        }
-        stage('Build'){
+            stage('Build'){
             steps {
                  dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
                 
@@ -76,14 +71,26 @@ pipeline {
                      }
                 }
              }
-             stage('Test'){
-                 steps {
-                      dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
-                         sh 'echo Test'
-                         sh 'mvn test'
-                      }
-                 }
+        stage('Sonar Analysis'){
+            steps{
+                 dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
+                    withSonarQubeEnv('Sonar'){
+                        withMaven(maven:'maven'){
+                            sh 'mvn sonar:sonar'
+                        }
+                        
+                  }
+                }
             }
+            
+        }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+        
+             
             stage('collect artifact'){
                 steps{
                     archiveArtifacts artifacts: 'HotelBookingApplication/target/*.jar', followSymlinks: false
