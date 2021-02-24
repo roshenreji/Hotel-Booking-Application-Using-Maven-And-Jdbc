@@ -74,7 +74,7 @@ pipeline {
         stage('Sonar Analysis'){
             steps{
                  dir("C:/Users/roshe/.jenkins/workspace/FirstArtifactory/HotelBookingApplication"){
-                    withSonarQubeEnv('SonarCloud'){
+                    withSonarQubeEnv('Sonar'){
                         withMaven(maven:'maven'){
                             sh 'mvn sonar:sonar'
                         }
