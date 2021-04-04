@@ -23,7 +23,7 @@ steps:
     sonarQubeRunAnalysis: false
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'HotelBookingApplication/target/HotelBookingApplication-0.0.1-SNAPSHOT.jar'
+    SourceFolder: 'HotelBookingApplication/target'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
