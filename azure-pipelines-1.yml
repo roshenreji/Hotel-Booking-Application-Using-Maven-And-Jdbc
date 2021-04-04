@@ -25,3 +25,7 @@ steps:
     SourceFolder: 'HotelBookingApplication/target'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
+- task: WhiteSource@21
+  inputs:
+    cwd: '$(System.DefaultWorkingDirectory)'
+    projectName: 'Bolt1'
