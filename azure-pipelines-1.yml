@@ -22,6 +22,6 @@ steps:
     sonarQubeRunAnalysis: false
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'target'
+    SourceFolder: 'HotelBookingApplication/target'
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
